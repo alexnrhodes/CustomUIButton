@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .lightGray
         
-        let customButton = ARCustoomButton(title: "GO", width: view.bounds.width/4)
+        let customButton = ARCustomButton(title: "START", width: view.bounds.width/3)
         
         view.addSubview(customButton)
         
