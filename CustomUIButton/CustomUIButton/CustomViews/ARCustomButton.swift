@@ -34,12 +34,64 @@ class ARCustoomButton: UIButton {
         hAnchor.isActive = true
         heightConstant = hAnchor.constant
         
-//        phaseTwo(title: title)
+        phaseTwo(title: title)
     }
+    
+    fileprivate func phaseTwo(title: String) {
+         guard let widthConstant = widthConstant, let heightConstant = heightConstant else { return }
+        layer.cornerRadius = 12
+        backgroundColor = .clear
+        layer.shadowRadius = 5.0
+        layer.shadowOpacity = 0.2
+        layer.masksToBounds = false
+        layer.shadowOffset = CGSize(width: widthConstant * 0.1, height: heightConstant * 0.1)
+        layer.shadowColor = UIColor.black.cgColor
+        setTitle(title, for: .normal)
+        titleLabel?.font = UIFont.systemFont(ofSize: 50, weight: .bold)
+        addTarget(self, action: #selector(down), for: .touchDown)
+        addTarget(self, action: #selector(up), for: .touchUpInside)
+        
+    }
+    
+    @objc fileprivate func down() {
+            
+            wAnchor?.isActive = false
+            hAnchor?.isActive = false
+            
+            guard let widthConstant = widthConstant, let heightConstant = heightConstant else { return }
+            wAnchor?.constant = widthConstant - widthConstant/15
+            hAnchor?.constant  = heightConstant - heightConstant/15
+            
+            wAnchor?.isActive = true
+            hAnchor?.isActive = true
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                self.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+            })
+        }
+        
+        @objc fileprivate func up() {
+            
+            wAnchor?.isActive = false
+            hAnchor?.isActive = false
+            
+            guard let widthConstant = widthConstant, let heightConstant = heightConstant else { return }
+
+            wAnchor?.constant = widthConstant
+            hAnchor?.constant  = heightConstant
+            
+            wAnchor?.isActive = true
+            hAnchor?.isActive = true
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                self.superview?.layoutIfNeeded()
+                self.transform = .identity
+            })
+        }
     
     override func draw(_ rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext() {
-            let buttonEllipse = CGRect(x: rect.size.width * 0.375, y: rect.size.height * 0.25, width: rect.size.width * 0.25, height: rect.size.height * 0.73)
+            let buttonEllipse = CGRect(x: 0, y: 0, width: rect.size.width, height: rect.size.height)
             
             context.addEllipse(in: buttonEllipse)
             context.clip()

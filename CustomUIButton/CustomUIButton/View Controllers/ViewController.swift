@@ -12,7 +12,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        view.backgroundColor = .lightGray
+        
+        let customButton = ARCustoomButton(title: "GO", width: view.bounds.width/4)
+        
+        view.addSubview(customButton)
+        
+        customButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        customButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
     }
 
 
